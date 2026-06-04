@@ -1,0 +1,17 @@
+{
+  "name": "hotel-luxury-spa",
+  "version": "1.0.0",
+  "description": "SPA para la gestión de reservas de hotel - Prueba de Desempeño",
+  "main": "src/main.js",
+  "type": "module",
+ "scripts": {
+  "dev": "vite",
+  "api": "json-server --watch db.json --port 3030"
+},
+  "keywords": [],
+  "author": "Cohorte 5",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}

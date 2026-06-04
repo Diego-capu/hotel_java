@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Hotel Manager",
+      "email": "manager@hotel.com",
+      "password": "123456",
+      "role": "manager"
+    },
+    {
+      "id": 2,
+      "name": "Juan Cliente",
+      "email": "cliente@test.com",
+      "password": "123456",
+      "role": "client"
+    }
+  ],
+  "rooms": []
+}
