@@ -6,7 +6,7 @@
   "type": "module",
  "scripts": {
   "dev": "vite",
-  "api": "json-server --watch db.json --port 3030"
+  "api": "json-server --watch db.json --port 3000"
 },
   "keywords": [],
   "author": "Cohorte 5",
