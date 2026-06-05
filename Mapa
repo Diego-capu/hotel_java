@@ -1,0 +1,51 @@
+[ index.html ] 
+      │
+      ▼ (Llama al punto de entrada)
+[ src/main.js ] ──► (Importa el archivo de estilos) ──► [ src/style.css ]
+      │
+      ▼ (Importa el Enrutador para arrancar la app)
+[ src/router.js ]
+      │
+      ├─► (Importa la Vista Login si no hay sesión) ──────► [ src/views/loginView.js ]
+      │                                                            │
+      └─► (Importa la Vista Dashboard si hay sesión) ──┐          ▼ (Pide verificar credenciales)
+                                                       │    [ src/api.js ]
+                                                       ▼           ▲
+                                            [ src/views/dashboardView.js ]
+                                                       (Pide el CRUD de habitaciones)
+
+🔌 Explicación paso a paso de las importaciones
+Para que todo funcione, cada archivo debe exportar sus funciones o sockets y el archivo que lo necesita debe importarlos especificando la ruta con ./ o ../ y siempre incluyendo la extensión .js (Vite es estricto con esto).
+
+Aquí tienes el orden exacto en el que debes revisar tus archivos:
+
+1. El Puente Principal: index.html ──► src/main.js
+Tu HTML no sabe qué es un CRUD ni qué es el Login; él solo llama al cerebro de la aplicación mediante una etiqueta de script especial de tipo módulo (type="module"):
+
+HTML
+<!-- Dentro del <body> de tu index.html -->
+<div id="app"></div>
+<script type="module" src="./src/main.js"></script>
+2. El Cerebro: src/main.js ──► Conecta Estilos y Enrutador
+main.js se encarga de recibir los estilos globales y despertar al Enrutador (Router) para que decida qué pantalla mostrar.
+
+Al inicio de tu src/main.js debes tener:
+
+JavaScript
+import './style.css'; // Trae los estilos de Tailwind personalizados
+import { Router } from './router.js'; // Trae el enrutador virtual
+### 3. El Selector de Vistas: `src/router.js` ──► Conecta las Pantallas
+El enrutador necesita conocer qué pantallas existen para poder renderizarlas dentro del `<div id="app">`.
+* **Al inicio de tu `src/router.js` debes tener:**
+  ```javascript
+  import { LoginView } from './views/loginView.js'; // Trae la pantalla de Login
+  import { DashboardView } from './views/dashboardView.js'; // Trae la pantalla del CRUD
+4. Las Vistas: loginView.js y dashboardView.js ──► Conectan la API y el Router
+Tanto el login (para validar usuarios) como el dashboard (para el CRUD de habitaciones) necesitan hablar con la base de datos a través de api.js. Además, necesitan al Router para poder saltar de una pantalla a otra (ej. cuando haces clic en "Cerrar Sesión" o te logueas con éxito).
+
+Al inicio de tus Vistas debes tener:
+
+JavaScript
+// Como estás dentro de la carpeta "views/", usas "../" para salir un nivel
+import { ApiService } from '../api.js'; // Para consultar/guardar datos en db.json
+import { Router } from '../router.js';   // Para redirigir de una vista a otra
